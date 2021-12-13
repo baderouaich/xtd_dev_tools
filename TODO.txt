@@ -1,0 +1,2 @@
+- enum stringifier
+- copyright year updater
