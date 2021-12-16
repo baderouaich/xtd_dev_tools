@@ -28,6 +28,7 @@ namespace xtd_dev_tools {
     xtd::forms::menu_item m_enum_stringifier_menu_item{ "Enum Stringifier", {*this, overload_<>(&main_form::open_enum_stringifier)}, xtd::forms::menu_images::edit_cut(), xtd::forms::shortcut::cmd_e };
     xtd::forms::menu_item m_tools_menu_item_options{ "Tools", { m_enum_stringifier_menu_item } };
     xtd::forms::main_menu m_main_menu{ m_tools_menu_item_options, };
+   
 
   };
 

@@ -14,10 +14,11 @@ namespace xtd_dev_tools {
     xtd::ustring stringify_enum_str(const xtd::ustring& enum_str);
 
   private:
-    xtd::forms::button m_copy_btn;
-    xtd::forms::panel m_panel;
+    //xtd::forms::vertical_layout_panel m_vertical_layout;
+    //xtd::forms::vertical_layout_panel m_panel;
     xtd::forms::text_box m_enum_string_input_txtbx{};
     xtd::forms::text_box m_enum_string_output_txtbx{};
+    xtd::forms::button m_copy_btn;
     xtd::forms::button m_stringify_enum_btn{};
   };
 

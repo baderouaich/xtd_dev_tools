@@ -5,11 +5,38 @@ using namespace xtd;
 using namespace xtd::forms;
 using namespace xtd_dev_tools;
 
-
-
 enum_stringifier_form::enum_stringifier_form()
 {
+  text("Enum Stringifier");
+  client_size({640, 480}).minimum_size(client_size()).maximum_size(client_size());
+  auto_size_mode(auto_size_mode::grow_and_shrink);
 
+
+  m_enum_string_input_txtbx.parent(*this);
+  m_enum_string_input_txtbx.location({0,0});
+  m_enum_string_input_txtbx.text("Enum string here...");
+  m_enum_string_input_txtbx.size({ client_size().width(), client_size().height() / 2 });
+  m_enum_string_input_txtbx.font(drawing::font(drawing::system_fonts::default_font(), 12.0f));
+  m_enum_string_input_txtbx.multiline(true);
+  m_enum_string_input_txtbx.word_wrap(false);
+
+  m_stringify_enum_btn.parent(*this);
+  m_stringify_enum_btn.text("Stringify");
+  m_stringify_enum_btn.size({ 150, 45 });
+  m_stringify_enum_btn.location({(width() - 150 ) / 2,  m_enum_string_input_txtbx.location().y() + m_enum_string_input_txtbx.size().height() + 5});
+  m_stringify_enum_btn.font(drawing::font(drawing::system_fonts::default_font(), 10.0f));
+  m_stringify_enum_btn.click += [this]
+  {
+    m_enum_string_output_txtbx.text(stringify_enum_str(m_enum_string_input_txtbx.text()));
+  };
+    
+  m_enum_string_output_txtbx.parent(*this);
+  m_enum_string_output_txtbx.location({ 0,  m_stringify_enum_btn.location().y() + m_stringify_enum_btn.size().height() + 5 });
+  m_enum_string_output_txtbx.size({ client_size().width(), height() / 3});
+  m_enum_string_output_txtbx.font(drawing::font(drawing::system_fonts::default_font(), 10.0f));
+  m_enum_string_output_txtbx.multiline(true);
+  m_enum_string_output_txtbx.word_wrap(true);
+  m_enum_string_output_txtbx.read_only(true);
 }
 
 

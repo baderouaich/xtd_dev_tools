@@ -29,6 +29,9 @@ main_form::main_form() {
 		yoffset += 51;
 		//xoffset += 51;
 	}
+
+
+
 }
 
 void main_form::main() {

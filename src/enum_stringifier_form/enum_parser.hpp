@@ -68,8 +68,8 @@ struct enum_parser
     }
   }
 
-  ustring name; // enum class name
-  std::vector<std::pair<ustring, std::optional<ustring>>> values; // enum class values
+  ustring name; // enum name
+  std::vector<std::pair<ustring, std::optional<ustring>>> values; // enum values
 };
 
 //using namespace xtd::tunit;
