@@ -22,8 +22,16 @@ struct enum_parser
       if (line.starts_with("{")) continue; //  skip brackets opening {
       if (line.starts_with("}")) continue; //  skip brackets closing }
 
+      if (line.starts_with("namespace"))
+      {
+        // extract name which is expected to be the next thing after "enum class"
+        auto name_begin_idx = line.last_index_of("namespace") + std::strlen("namespace");
+        auto name_end_idx = line.last_index_of('{') - name_begin_idx;
+        if (name_end_idx == ustring::npos) name_end_idx = line.size() - 1; // '{' can be at the next line
+        namespaces.push_back(line.substr(name_begin_idx, name_end_idx).trim()); // extract enum class's name
+      }
       // If we're at the beginning of an enum class
-      if (line.starts_with("enum class"))
+      else if (line.starts_with("enum class"))
       {
         // extract name which is expected to be the next thing after "enum class"
         auto name_begin_idx = line.last_index_of("enum class") + std::strlen("enum class");
@@ -58,7 +66,7 @@ struct enum_parser
         else // if it's a [enum_member] only
         {
           // Pop ',' at the end if available
-          if (line.back() == ',') line.remove(line.size() - 1);
+          if (line.back() == ',') line = line.remove(line.size() - 1);
 
           // now the line itself becomes the [enum_member]
           std::pair<ustring, std::optional<ustring>> value{ line.trim(), std::nullopt };
@@ -67,7 +75,10 @@ struct enum_parser
       }
     }
   }
+  
+  ustring name_with_namespace() const {return ustring::join("::", namespaces) + (namespaces.size() ? "::" : "") + name;}
 
+  std::vector<ustring> namespaces; // enum name
   ustring name; // enum name
   std::vector<std::pair<ustring, std::optional<ustring>>> values; // enum values
 };

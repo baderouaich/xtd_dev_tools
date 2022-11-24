@@ -14,7 +14,7 @@ main_form::main_form() {
 	// 
 	static std::vector<std::unique_ptr<button>> buttons{};
 	std::int32_t yoffset = 10;
-	std::int32_t xoffset = 10;
+	//std::int32_t xoffset = 10;
 	for(const auto& v : m_tools_menu_item_options.menu_items())
 	{
 		std::unique_ptr<button> btn{ new button() };

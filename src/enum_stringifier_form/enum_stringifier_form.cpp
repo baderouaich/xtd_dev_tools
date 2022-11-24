@@ -45,30 +45,26 @@ xtd::ustring enum_stringifier_form::stringify_enum_str(const xtd::ustring& enum_
   std::unique_ptr<enum_parser> enum_parser_ptr(new enum_parser(enum_str));
 
   std::ostringstream ostream_oss{};
-  std::ostringstream wostream_oss{};
 
-  ostream_oss << "inline std::ostream& operator<<(std::ostream& os, const " << enum_parser_ptr->name << " value) { return os << to_string(value, { ";
-  wostream_oss << "inline std::wostream& operator<<(std::wostream& os, const " << enum_parser_ptr->name << " value) { return os << to_string(value, { ";
+  ostream_oss << "template<> struct xtd::enum_register<" << enum_parser_ptr->name_with_namespace() << "> {" << std::endl
+  << "  explicit operator auto() const {return xtd::enum_collection<" << enum_parser_ptr->name_with_namespace() << "> {";
   for (std::size_t i = 0; i < enum_parser_ptr->values.size(); ++i)
   {
     const auto& [enum_member, value] = enum_parser_ptr->values[i];
     //{progress_box_options::none, "none"},
-    ostream_oss << '{' << enum_parser_ptr->name << "::" << enum_member << ", \"" << enum_member << "\"}";
-    wostream_oss << '{' << enum_parser_ptr->name << "::" << enum_member << ", L\"" << enum_member << "\"}";
+    ostream_oss << '{' << enum_parser_ptr->name_with_namespace() << "::" << enum_member << ", \"" << enum_member << "\"}";
     if (i != enum_parser_ptr->values.size() - 1)
     {
       ostream_oss << ", ";
-      wostream_oss << ", ";
     }
     else
     {
-      ostream_oss << "}); }";
-      wostream_oss << "}); }";
+      ostream_oss << "};}" << std::endl << "};";
     }
     //{progress_box_options::none, L"none"},
   }
 
-  return ostream_oss.str() + '\n' + wostream_oss.str();
+  return ostream_oss.str();
 }
 catch (const std::exception& e)
 {
