@@ -66,7 +66,7 @@ struct enum_parser
         else // if it's a [enum_member] only
         {
           // Pop ',' at the end if available
-          if (line.back() == ',') line.remove(line.size() - 1);
+          if (line.back() == ',') line = line.remove(line.size() - 1);
 
           // now the line itself becomes the [enum_member]
           std::pair<ustring, std::optional<ustring>> value{ line.trim(), std::nullopt };
